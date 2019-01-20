@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:tint="@color/dark"
+                android:src="@drawable/back"
+                android:layout_gravity="center_vertical"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="22dp"
+                android:fontFamily="@font/light"
+                android:textColor="@color/red"
+                android:text="Compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:background="@color/dark"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="@color/black"
+            android:text="To"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:hint="Admin"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <View
+            android:background="@color/dark"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="@color/black"
+            android:text="Subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:hint="Meeting"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <View
+            android:background="@color/dark"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="@color/black"
+            android:text="Description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:hint="lipsum loreum dollar sit"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <View
+            android:background="@color/dark"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:background="@drawable/send"
+
+                android:layout_margin="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
