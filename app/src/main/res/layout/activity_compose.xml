@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <ImageView
+                android:id="@+id/back"
                 android:tint="@color/dark"
                 android:src="@drawable/back"
                 android:layout_gravity="center_vertical"
@@ -104,7 +105,7 @@
             android:layout_height="match_parent">
             <Button
                 android:background="@drawable/send"
-
+android:id="@+id/done"
                 android:layout_margin="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"

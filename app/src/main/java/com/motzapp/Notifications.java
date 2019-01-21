@@ -8,14 +8,13 @@ import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Profile  extends Activity implements View.OnClickListener {
+public class Notifications extends Activity implements View.OnClickListener {
     @BindView(R.id.back)
     ImageView back;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_notifications);
         ButterKnife.bind(this);
         back.setOnClickListener(this);
 
