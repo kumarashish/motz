@@ -1,6 +1,7 @@
 package utils;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -54,6 +55,17 @@ public class Utils {
             ex.fillInStackTrace();
         }
         return status;
+    }
+
+    public static  void cancelProgressDialog(Activity act, final ProgressDialog dialog)
+    {
+       act. runOnUiThread(new Runnable() {
+           @Override
+           public void run() {
+               dialog.cancel();
+           }
+       });
+
     }
     public static String getTotalCasesCount(String data) {
 

@@ -9,6 +9,6 @@
             android:title="Settings"/>
         <item
             android:id="@+id/logout"
-            android:title="logout"/>
+            android:title="Logout"/>
 
 </menu>

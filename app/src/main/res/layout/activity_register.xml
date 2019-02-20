@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/back"
 
                 android:layout_marginTop="20dp"
@@ -289,7 +290,7 @@ android:layout_gravity="center"
         <View
 
             android:layout_width="match_parent"
-            android:layout_height="20dp"/>
+            android:layout_height="250dp"/>
     </LinearLayout>
     </ScrollView>
 

@@ -54,8 +54,8 @@
                     android:background="@color/red" />
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/white_circle"
@@ -64,7 +64,7 @@
                     android:text="AK"
                     android:textAllCaps="true"
                     android:textColor="@color/red"
-                    android:textSize="25dp" />
+                    android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="Case 1"
                             android:textColor="@android:color/black"
-                            android:textSize="24dp" />
+                            android:textSize="18dp" />
                         <ImageView
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
@@ -102,7 +102,7 @@
                         android:layout_gravity="center_vertical"
                         android:text="Your case has been accepted"
                         android:textColor="@color/dark"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -124,8 +124,8 @@
                     android:background="@color/dark" />
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/white_circle"
@@ -134,7 +134,7 @@
                     android:text="AS"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
-                    android:textSize="25dp" />
+                    android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="Case 2"
                             android:textColor="@android:color/black"
-                            android:textSize="24dp" />
+                            android:textSize="18dp" />
                         <ImageView
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
@@ -173,7 +173,7 @@
                         android:layout_gravity="center_vertical"
                         android:text="Your case has been rejected by admin"
                         android:textColor="@color/dark"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -196,8 +196,8 @@
                     android:background="@color/dark" />
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/white_circle"
@@ -206,7 +206,7 @@
                     android:text="Am"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
-                    android:textSize="25dp" />
+                    android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -227,7 +227,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="Case 3"
                             android:textColor="@android:color/black"
-                            android:textSize="24dp" />
+                            android:textSize="18dp" />
                         <ImageView
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
@@ -245,7 +245,7 @@
                         android:layout_gravity="center_vertical"
                         android:text="your case is in pending state"
                         android:textColor="@color/dark"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -265,8 +265,8 @@
                     android:background="@color/dark" />
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/white_circle"
@@ -275,7 +275,7 @@
                     android:text="MY"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
-                    android:textSize="25dp" />
+                    android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -297,7 +297,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="Case 1"
                             android:textColor="@android:color/black"
-                            android:textSize="24dp" />
+                            android:textSize="18dp" />
                         <ImageView
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
@@ -315,7 +315,7 @@
                         android:layout_gravity="center_vertical"
                         android:text="your case has been rejected"
                         android:textColor="@color/dark"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
             </LinearLayout>

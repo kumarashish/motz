@@ -69,4 +69,8 @@ public RegisterModel()
     public String getLname() {
         return lname;
     }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
 }

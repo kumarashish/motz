@@ -230,10 +230,49 @@ public class WebApiCall {
                 .add("password", model.getPassword())
                 .add("first_name", model.getFname())
                 .add("last_name", model.getLname())
-                .add("mobile", model.getMobile())
+                .add("phone", model.getMobile())
 
                 .build();
         Request request = new Request.Builder().url(url).post(formBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+                callback.onError(e.fillInStackTrace().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200 || response.code() == 201) {
+                    if (response != null) {
+                        callback.onSucess(response.body().string());
+                    } else {
+                        callback.onError(response.message());
+                    }
+                } else {
+                    callback.onError(response.message());
+                }
+            }
+        });
+    }
+
+    public void updateProfile(String url, String fname,String lname,String mobile,String token, final WebApiResponseCallback callback) {
+
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS).build();
+        RequestBody formBody = null;
+
+
+
+        formBody = new FormBody.Builder()
+
+                .add("first_name", fname)
+                .add("last_name", lname)
+                .add("phone", mobile)
+
+                .build();
+        Request request = new Request.Builder().header("auth_token",token).url(url).post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

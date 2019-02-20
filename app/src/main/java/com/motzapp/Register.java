@@ -134,15 +134,14 @@ public class Register extends Activity implements View.OnClickListener, WebApiRe
             finish();
         }
         Utils.showToast(Register.this,Utils.getMessage(value));
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(Register.this,progressDialog);
 
     }
 
     @Override
     public void onError(String value) {
         Utils.showToast(Register.this,Utils.getMessage(value));
-        progressDialog.cancel();
-
+        Utils.cancelProgressDialog(Register.this,progressDialog);
 
     }
 }

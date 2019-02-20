@@ -10,6 +10,8 @@ public class Common {
     public static String forgetPasswordUrl=baseUrl+"/motzusers/forgot_password";
     public static String totalCaseUrl=baseUrl+"/cases/total_cases";
     public static String fbLoginUrl=baseUrl+"motzusers/login_with_facebook";
+    public static String updateProfileUrl=baseUrl+"/motzusers/update_my_details";
+
 
 
 

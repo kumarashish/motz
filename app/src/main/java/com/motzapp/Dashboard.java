@@ -143,13 +143,13 @@ public void setCases(final String value)
         } else {
             Utils.showToast(Dashboard.this, Utils.getMessage(value));
         }
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(Dashboard.this,progressDialog);
     }
 
     @Override
     public void onError(String value) {
         Utils.showToast(Dashboard.this,Utils.getMessage(value));
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(Dashboard.this,progressDialog);
     }
 
     @Override

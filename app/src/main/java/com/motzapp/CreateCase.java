@@ -160,7 +160,7 @@ break;
                         Utils.showToast(CreateCase.this, Utils.getMessage(value));
                     }
 
-                progressDialog.cancel();
+                Utils.cancelProgressDialog(CreateCase.this,progressDialog);
             }
         });
 
@@ -170,6 +170,6 @@ break;
     @Override
     public void onError(String value) {
         Utils.showToast(CreateCase.this,Utils.getMessage(value));
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(CreateCase.this,progressDialog);
     }
 }

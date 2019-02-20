@@ -80,7 +80,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
                     if (Utils.isNetworkAvailable(Login.this)) {
                         progressDialog.show();
                         controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),Login.this);
-                    } else {
+                    }} else {
 
                         if (emailId.getText().length() == 0) {
                             Toast.makeText(Login.this, "Please enter valid username", Toast.LENGTH_SHORT).show();
@@ -88,7 +88,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
                             Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
                         }
                     }
-                }
+
                 break;
             case R.id.signUp:
                 startActivity(new Intent(Login.this,Register.class));
@@ -111,13 +111,13 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
             finish();
         }
         Utils.showToast(Login.this,Utils.getMessage(value));
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(Login.this,progressDialog);
     }
 
     @Override
     public void onError(String value) {
         Utils.showToast(Login.this,Utils.getMessage(value));
-        progressDialog.cancel();
+        Utils.cancelProgressDialog(Login.this,progressDialog);
 
 
     }
