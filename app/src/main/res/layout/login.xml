@@ -56,6 +56,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
                 <EditText
+                    android:id="@+id/emailId"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
                     android:fontFamily="@font/light"
                     android:textColorHint="@color/dark"
                     android:hint="User Name"
@@ -88,8 +91,11 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp" />
                 <EditText
+                    android:id="@+id/password"
                     android:fontFamily="@font/light"
                     android:textColorHint="@color/dark"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
                     android:hint="Password"
                     android:textSize="18dp"
                     android:textColor="@android:color/white"

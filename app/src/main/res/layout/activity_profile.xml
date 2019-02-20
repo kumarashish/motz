@@ -47,7 +47,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:hint="Tom"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:id="@+id/fname"
+            android:hint=""
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -68,7 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:hint="Cruise"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:id="@+id/lname"
+            android:hint=""
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -89,7 +95,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
-            android:hint="8166678900"
+            android:inputType="number"
+            android:imeOptions="actionNext"
+            android:id="@+id/mobile"
+            android:hint=""
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -110,6 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"
+            android:id="@+id/email"
             android:hint="abc@gmail.com"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"

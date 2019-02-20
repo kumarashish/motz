@@ -10,13 +10,16 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import common.AppController;
+
 public class Splash  extends Activity {
     private static int SPLASH_TIME_OUT = 1500;
-
+AppController  controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        controller=(AppController)getApplicationContext();
         if( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)&&(Build.VERSION.SDK_INT <26) ){
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -41,8 +44,12 @@ public class Splash  extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-
-                    startActivity(new Intent(Splash.this,Login.class));
+if(controller.getManager().isUserLoggedIn())
+{
+    startActivity(new Intent(Splash.this, Dashboard.class));
+}else {
+    startActivity(new Intent(Splash.this, Login.class));
+}
                     finish();
 
             }
