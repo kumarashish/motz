@@ -14,6 +14,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppController;
@@ -28,8 +41,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
     Button submit;
     @BindView(R.id.signUp)
     TextView signUp;
-    @BindView(R.id.facebook)
-    Button fb;
+
     @BindView(R.id.google)
     Button google;
     @BindView(R.id.forgetpassword)
@@ -41,6 +53,13 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
     @BindView(R.id.password)
     EditText password;
     AppController controller;
+    @BindView(R.id.btn_fblogin)
+    LoginButton btn_fblogin;
+    @BindView(R.id.facebook)
+    Button fbLogin;
+    CallbackManager  callbackManager;
+    int apiCall;
+    int login=1,fb_Login=2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,12 +76,67 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
         progressDialog.setIndeterminate(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         ButterKnife.bind(this);
-        fb.setOnClickListener(this);
+        btn_fblogin.setOnClickListener(this);
+        fbLogin.setOnClickListener(this);
         google.setOnClickListener(this);
         submit.setOnClickListener(this);
         signUp.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
         validation=new Validation(Login.this);
+        btn_fblogin.setReadPermissions("email", "public_profile");
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().logOut();
+
+        btn_fblogin.registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        // App code
+                        if (loginResult.getAccessToken().isExpired()) {
+                            LoginManager.getInstance().logInWithReadPermissions(Login.this, Arrays.asList("public_profile", "email"));
+                        }
+                        btn_fblogin.setVisibility(View.GONE);
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("LoginActivity", response.toString());
+                                        try {
+                                            // Application code
+                                            String id = response.getJSONObject().getString("id");
+                                            String name = response.getJSONObject().getString("name");
+                                            String email = response.getJSONObject().getString("email");
+
+                                            apiCall = fb_Login;
+                                            progressDialog.show();
+                                            controller.getWebApiCall().loginWithFb(Common.fbLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), loginResult.getAccessToken().getToken(), Login.this);
+                                            LoginManager.getInstance().logOut();
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            ;
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                        Log.d("Status", loginResult.toString());
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                        Log.d("Status", exception.toString());
+                    }
+                });
     }
 
     @Override
@@ -70,7 +144,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
         switch (v.getId())
         {
             case R.id.facebook:
-                Toast.makeText(Login.this, "Logged in Sucessfully", Toast.LENGTH_SHORT).show();
+              btn_fblogin.performClick();
                 break;
             case R.id.google:
                 Toast.makeText(Login.this, "Logged in Sucessfully", Toast.LENGTH_SHORT).show();
@@ -78,6 +152,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
             case R.id.submit:
                 if( ( validation.isEmailIdValid(emailId))&&(validation.isNotNull(password))) {
                     if (Utils.isNetworkAvailable(Login.this)) {
+                        apiCall=login;
                         progressDialog.show();
                         controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),Login.this);
                     }} else {
@@ -104,11 +179,16 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
     @Override
     public void onSucess(String value) {
         if(Utils.getStatus(value)==true)
-        {    controller.setProfile(new RegisterModel(value));
-            controller.getManager().setUserLoggedIn(true);
-            controller.getManager().setUserToken(value);
-            startActivity(new Intent(Login.this, Dashboard.class));
-            finish();
+        {
+
+
+                controller.setProfile(new RegisterModel(value));
+                controller.getManager().setUserLoggedIn(true);
+                controller.getManager().setUserToken(value);
+                startActivity(new Intent(Login.this, Dashboard.class));
+                finish();
+
+
         }
         Utils.showToast(Login.this,Utils.getMessage(value));
         Utils.cancelProgressDialog(Login.this,progressDialog);
@@ -120,5 +200,10 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
         Utils.cancelProgressDialog(Login.this,progressDialog);
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

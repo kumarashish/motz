@@ -15,7 +15,7 @@ public class RegisterModel {
     String password;
     String mobile;
     String userId;
-    public RegisterModel(String fname,String lname,String mobile,String emailId,String password)
+    public RegisterModel(String fname,String lname,String emailId,String mobile,String password)
     {
         this.fname=fname;
         this.lname=lname;
