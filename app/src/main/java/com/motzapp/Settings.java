@@ -50,7 +50,7 @@ public boolean isAllFieldsValidated()
     {
                  if(confirmPassword.getText().toString().equals(newPassword.getText().toString()))
                  {
-
+                  status=true;
                  }else {
                      Toast.makeText(Settings.this,"Password and Confirm Password must be same",Toast.LENGTH_SHORT).show();
                  }
@@ -105,11 +105,15 @@ public void cancelDialog()
         if(Utils.getStatus(value)==true)
         {
             Utils.showToast(Settings.this,"Password updated sucessfully");
+            cancelDialog();
+            finish();
+
         }else{
             Utils.showToast(Settings.this,Utils.getMessage(value));
+            cancelDialog();
         }
 
-        cancelDialog();
+
 
     }
 

@@ -82,7 +82,7 @@ Button send;
               {
                   apiCall=createCase;
                   progressDialog.show();
-                  controller.getWebApiCall().createCase(Common.createCase,controller.getProfile().getUserId(),list.get(category.getSelectedItemPosition()).getId(),title.getText().toString(),description.getText().toString(),controller.getManager().getUserToken(),CreateCase.this);
+                  controller.getWebApiCall().createCase(Common.createCase,controller.getProfile().getUserId(),list.get(category.getSelectedItemPosition()-1).getId(),title.getText().toString(),description.getText().toString(),controller.getManager().getUserToken(),CreateCase.this);
 
               }else{
                   if(title.getText().length()==0)
@@ -137,6 +137,8 @@ Button send;
 
                     switch (apiCall) {
                         case 1:
+                            list.clear();
+                            categoryNameList.add("Select");
                         JSONArray jsonArray = Utils.getJSONArray(value, "categories_details");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             try {

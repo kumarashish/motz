@@ -15,19 +15,21 @@
         android:orientation="horizontal">
 
         <View
+            android:id="@+id/view"
             android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@color/red" />
 
         <TextView
+            android:id="@+id/initials"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:background="@drawable/white_circle"
             android:gravity="center"
-            android:maxLength="2"
-            android:text="AK"
+            android:maxLength="3"
+            android:text=""
             android:textAllCaps="true"
             android:textColor="@color/red"
             android:textSize="25dp" />
@@ -41,190 +43,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/heading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Case 1"
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="24dp" />
 
             <TextView
+                android:id="@+id/details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="lipsum loreum dollar sit...."
+                android:text="l"
                 android:textColor="@color/dark"
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/dark" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/dark" />
-
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/white_circle"
-            android:gravity="center"
-            android:maxLength="2"
-            android:text="AS"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="18dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Case 2"
-                android:textColor="@android:color/black"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="lipsum loreum dollar sit...."
-                android:textColor="@color/dark"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/dark" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/dark" />
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/white_circle"
-            android:gravity="center"
-            android:maxLength="2"
-            android:text="Am"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="18dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Case 3"
-                android:textColor="@android:color/black"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="lipsum loreum dollar sit...."
-                android:textColor="@color/dark"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@color/dark" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-        <View
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="@color/dark" />
-
-        <TextView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/white_circle"
-            android:gravity="center"
-            android:maxLength="2"
-            android:text="MY"
-            android:textAllCaps="true"
-            android:textColor="@android:color/black"
-            android:textSize="18dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Case 4"
-                android:textColor="@android:color/black"
-                android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="lipsum loreum dollar sit...."
-                android:textColor="@color/dark"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -36,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:visibility="visible"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:tint="@color/dark"
@@ -63,23 +64,24 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <Spinner
-            android:id="@+id/category"
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:paddingLeft="5dp"
-            android:background="@android:color/transparent"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-        <ImageView
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/down_arrow"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            <TextView
+                android:id="@+id/category"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="5dp"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:visibility="invisible"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/down_arrow"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
         </RelativeLayout>
         <View
             android:background="@color/dark"
@@ -95,7 +97,7 @@
             android:text="Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <EditText
+        <TextView
             android:inputType="text"
             android:imeOptions="actionNext"
             android:id="@+id/title"
@@ -119,7 +121,7 @@
             android:text="Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <EditText
+        <TextView
 
             android:inputType="text"
             android:imeOptions="actionDone"
@@ -134,22 +136,23 @@
             android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
+
         <View
             android:background="@color/dark"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/last_mordified_on"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp"
+            android:fontFamily="@font/light"
+            android:textColor="@color/black"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:background="@drawable/send"
-               android:id="@+id/send"
-                android:layout_margin="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
-        </RelativeLayout>
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

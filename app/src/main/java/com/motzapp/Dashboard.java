@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,13 +19,18 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.lang.reflect.UndeclaredThrowableException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppController;
 import common.Common;
 import interfaces.WebApiResponseCallback;
+import model.CasesModel;
 import utils.Utils;
 
 public class Dashboard extends Activity implements View.OnClickListener, WebApiResponseCallback {
@@ -49,6 +55,7 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
     AppController controller;
     @BindView(R.id.listView1)
     ListView caseList;
+    ArrayList<CasesModel>caselistItems=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,13 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
         menu.setOnClickListener(this);
         mail.setOnClickListener(this);
         getData();
+        caseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CaseDetails.model=caselistItems.get(position);
+                startActivity(new Intent(Dashboard.this,CaseDetails.class));
+            }
+        });
     }
 public void getData(){
     if (Utils.isNetworkAvailable(Dashboard.this)) {
@@ -125,25 +139,36 @@ public void setCases(final String value)
 {runOnUiThread(new Runnable() {
     @Override
     public void run() {
+try {
 
-
-
-        totalCasesCount.setText(value);
-        if(Integer.parseInt(value)>0)
-        {   noCase.setVisibility(View.VISIBLE);
-            noCase.setText("You have "+value+ " case but case details not available in total_cases  api");
+    JSONObject jsonObject = new JSONObject(value);
+    JSONArray caseList = jsonObject.getJSONArray("case_details");
+    for (int i = 0; i < caseList.length(); i++)
+    {
+        CasesModel model=new CasesModel(caseList.getJSONObject(i));
+        caselistItems.add(model);
+    }
+}catch (Exception ex)
+{
+    ex.fillInStackTrace();
+}
+        totalCasesCount.setText(Integer.toString(caselistItems.size()));
+        if(caselistItems.size()>0)
+        {   caseList.setVisibility(View.VISIBLE);
+           noCase.setVisibility(View.GONE);
+            caseList.setAdapter(new Adapter(caselistItems,Dashboard.this));
         }else{
             caseList.setVisibility(View.GONE);
             noCase.setVisibility(View.VISIBLE);
         }
     }
 });
-
 }
     @Override
     public void onSucess(String value) {
         if (Utils.getStatus(value) == true) {
-            setCases(Utils.getTotalCasesCount(value));
+
+            setCases(value);
 
         } else {
             Utils.showToast(Dashboard.this, Utils.getMessage(value));

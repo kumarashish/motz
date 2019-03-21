@@ -408,7 +408,7 @@ public class WebApiCall {
         RequestBody formBody = null;
         formBody = new FormBody.Builder()
                 .add("user_id", userId)
-                .add("category", category)
+                .add("category_id", category)
                 .add("title",title)
                 .add("description", description)
                 .build();
