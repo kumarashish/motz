@@ -45,11 +45,11 @@ public class WebApiCall {
         }
         return result;
     }
-    public void getData(String url, final WebApiResponseCallback callback) {
+    public void getDataCommonMethod(String url,String token ,final WebApiResponseCallback callback) {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS).build();
-        final Request request = new Request.Builder().url(url).build();
+        final Request request = new Request.Builder().header("Auth-Token",token).url(url).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -330,38 +330,43 @@ public class WebApiCall {
     }
 
 
-public void postFormData(String url,String key,String userId ,final WebApiResponseCallback callback)
-{
-    OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS).build();
-    RequestBody formBody = null;
-    formBody = new FormBody.Builder()
-            .add(key, userId)
-            .build();
-    Request request = new Request.Builder().url(url).post(formBody).build();
-    client.newCall(request).enqueue(new Callback() {
-        @Override
-        public void onFailure(Call call, IOException e) {
 
-            callback.onError(e.fillInStackTrace().toString());
+    public void postData(String url,String token,String [] key,String [] values,final WebApiResponseCallback callback)
+    {
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS).build();
+        FormBody.Builder formBuilder = new FormBody.Builder();
+        for(int i=0;i<key.length;i++)
+        {
+
+            formBuilder.add(key[i], values[i]);
+
         }
+        RequestBody formBody= formBuilder.build();
+        Request request = new Request.Builder().header("Auth-Token",token).url(url).post(formBody).build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-        @Override
-        public void onResponse(Call call, Response response) throws IOException {
-            if (response.code() == 200 || response.code() == 201) {
-                if (response != null) {
-                    callback.onSucess(response.body().string());
+                callback.onError(e.fillInStackTrace().toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200 || response.code() == 201) {
+                    if (response != null) {
+                        callback.onSucess(response.body().string());
+                    } else {
+                        callback.onError(response.message());
+                    }
                 } else {
                     callback.onError(response.message());
                 }
-            } else {
-                callback.onError(response.message());
             }
-        }
-    });
-}
-//
+        });
+    }
+
     public String postData(String url,String userId,String acesstoken,final WebApiResponseCallback callback)
     {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
@@ -371,7 +376,7 @@ public void postFormData(String url,String key,String userId ,final WebApiRespon
         formBody = new FormBody.Builder()
                 .add("user_id", userId)
                 .build();
-        Request request = new Request.Builder().header("auth_token",acesstoken).url(url).post(formBody).build();
+        Request request = new Request.Builder().header("Auth-Token",acesstoken).url(url).post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -407,7 +412,7 @@ public void postFormData(String url,String key,String userId ,final WebApiRespon
                 .add("title",title)
                 .add("description", description)
                 .build();
-        Request request = new Request.Builder().header("auth_token",acesstoken).url(url).post(formBody).build();
+        Request request = new Request.Builder().header("Auth-Token",acesstoken).url(url).post(formBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -430,99 +435,7 @@ public void postFormData(String url,String key,String userId ,final WebApiRespon
         });
         return "";
     }
-//    public void register(String url, RegistrationModel model, final WebApiResponseCallback callback) {
-//
-//        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
-//                .writeTimeout(60, TimeUnit.SECONDS)
-//                .readTimeout(60, TimeUnit.SECONDS).build();
-//        RequestBody formBody = null;
-//
-//
-//
-//        formBody = new FormBody.Builder()
-//                .add("email", model.getEmail())
-//                .add("password", model.getPassword())
-//                .add("first_name", model.getFirst_name())
-//                .add("last_name", model.getLast_name())
-//                .add("salutation", model.getSalutation())
-//                .add("category_id", model.getCategory_id())
-//                .add("company_name", model.getCompany_name())
-//                .add("street_name", model.getStreet_name())
-//                .add("door_no", model.getDoor_no())
-//                .add("city", model.getCity())
-//
-//                .add("zip_code", model.getZip_code())
-//                .add("phone_number", model.getPhoneNumber())
-//                .add("business_email", model.getBusiness_email())
-//                .add("paypal_email", model.getPaypal_email())
-//                .add("vat_id", model.getVat_id())
-//                .build();
-//        Request request = new Request.Builder().url(url).post(formBody).build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//                callback.onError(e.fillInStackTrace().toString());
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                if (response.code() == 200 || response.code() == 201) {
-//                    if (response != null) {
-//                        callback.onSucess(response.body().string());
-//                    } else {
-//                        callback.onError(response.message());
-//                    }
-//                } else {
-//                    callback.onError(response.message());
-//                }
-//            }
-//        });
-//    }
-//    public void postData(String url, String json,final WebApiResponseCallback callback) {
-//        client.newBuilder().connectTimeout(60000, TimeUnit.MILLISECONDS).readTimeout(60000, TimeUnit.MILLISECONDS).build();
-//        RequestBody reqBody = RequestBody.create(JSON, json);
-//        Request request = new Request.Builder().url(url).post(reqBody).build();
-//        client.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//                callback.onError(e.fillInStackTrace().toString());
-//            }
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//               // cancelProgressDialog(pd);
-//                if (response.code() == 200 || response.code() == 201) {
-//                    if (response != null) {
-//                        callback.onSucess(response.body().string());
-//                    } else {
-//                        callback.onError(response.message());
-//                    }
-//                } else {
-//                    callback.onError(response.message());
-//                }
-//            }
-//        });
-//    }
-//    public String postData(String url, String json) {
-//        client.newBuilder().connectTimeout(60000, TimeUnit.MILLISECONDS).readTimeout(60000, TimeUnit.MILLISECONDS).build();
-//        RequestBody reqBody = RequestBody.create(JSON, json);
-//        Request request = new Request.Builder().url(url).post(reqBody).build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//            if (response.code() == 200) {
-//                return response.body().string();
-//
-//            } else {
-//                return getErrorData();
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.fillInStackTrace();
-//            return getErrorData();
-//        }
-//
-//    }
+
 
     }
 

@@ -46,7 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/oldPassword"
             android:hint="*************"
+            android:inputType="textPassword"
+            android:imeOptions="actionNext"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -67,7 +70,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:imeOptions="actionNext"
+            android:id="@+id/newPassword"
             android:hint="*************"
+            android:inputType="textPassword"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -88,7 +94,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/confirmPassword"
             android:hint="*************"
+            android:inputType="textPassword"
             android:layout_margin="5dp"
             android:paddingLeft="5dp"
             android:background="@android:color/transparent"
@@ -103,7 +111,7 @@
             android:layout_height="match_parent">
             <Button
                 android:background="@drawable/submit"
-
+                  android:id="@+id/submit"
                 android:layout_margin="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"

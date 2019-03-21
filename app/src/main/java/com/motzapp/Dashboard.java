@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,12 +42,13 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
     TextView emailCount;
     @BindView(R.id.total_cases_count)
     TextView totalCasesCount;
-    @BindView(R.id.caeslist)
-            View caseList;
+
     @BindView(R.id.noCase)
             TextView noCase;
     ProgressDialog progressDialog;
     AppController controller;
+    @BindView(R.id.listView1)
+    ListView caseList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,7 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
 public void getData(){
     if (Utils.isNetworkAvailable(Dashboard.this)) {
         progressDialog.show();
-        controller.getWebApiCall().postData(Common.totalCaseUrl,controller.getProfile().getUserId(),controller.getManager().getUserToken(),Dashboard.this);
+        controller.getWebApiCall().getDataCommonMethod(Common.totalCaseUrl,controller.getManager().getUserToken(),Dashboard.this);
     }
 }
     @Override
@@ -123,6 +125,9 @@ public void setCases(final String value)
 {runOnUiThread(new Runnable() {
     @Override
     public void run() {
+
+
+
         totalCasesCount.setText(value);
         if(Integer.parseInt(value)>0)
         {   noCase.setVisibility(View.VISIBLE);

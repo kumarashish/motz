@@ -45,7 +45,8 @@ public class Register extends Activity implements View.OnClickListener, WebApiRe
     ProgressDialog progressDialog;
     AppController controller;
     Validation validation;
-
+int apiCall;
+int checkUserExistence=1,register=2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,12 @@ public class Register extends Activity implements View.OnClickListener, WebApiRe
      }
      return false;
  }
+ public void register()
+ {
+     RegisterModel model=new RegisterModel(fname.getText().toString(),lName.getText().toString(),email.getText().toString(),mobile.getText().toString(),password.getText().toString());
+     controller.getWebApiCall().register(Common.registerUser,model,Register.this);
+
+ }
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -120,21 +127,22 @@ public class Register extends Activity implements View.OnClickListener, WebApiRe
             case R.id.signUp:
                 if(isFieldsValidated())
                 {
+
                   progressDialog.show();
-                    RegisterModel model=new RegisterModel(fname.getText().toString(),lName.getText().toString(),email.getText().toString(),mobile.getText().toString(),password.getText().toString());
-                    controller.getWebApiCall().register(Common.registerUser,model,Register.this);
-                }
+
+
+                      }
                 break;
         }
     }
     @Override
     public void onSucess(String value) {
         if(Utils.getStatus(value)==true)
-        {
+        { Utils.showToast(Register.this,Utils.getMessage(value));
+            Utils.cancelProgressDialog(Register.this,progressDialog);
             finish();
         }
-        Utils.showToast(Register.this,Utils.getMessage(value));
-        Utils.cancelProgressDialog(Register.this,progressDialog);
+
 
     }
 
