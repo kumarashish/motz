@@ -135,35 +135,34 @@ public void getData(){
         });
         popup.show();
     }
-public void setCases(final String value)
-{runOnUiThread(new Runnable() {
-    @Override
-    public void run() {
-try {
 
-    JSONObject jsonObject = new JSONObject(value);
-    JSONArray caseList = jsonObject.getJSONArray("case_details");
-    for (int i = 0; i < caseList.length(); i++)
-    {
-        CasesModel model=new CasesModel(caseList.getJSONObject(i));
-        caselistItems.add(model);
+    public void setCases(final String value) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    JSONObject jsonObject = new JSONObject(value);
+                    JSONArray caseList = jsonObject.getJSONArray("case_details");
+                    for (int i = 0; i < caseList.length(); i++) {
+                        CasesModel model = new CasesModel(caseList.getJSONObject(i));
+                        caselistItems.add(model);
+                    }
+                } catch (Exception ex) {
+                    ex.fillInStackTrace();
+                }
+                totalCasesCount.setText(Integer.toString(caselistItems.size()));
+                if (caselistItems.size() > 0) {
+                    caseList.setVisibility(View.VISIBLE);
+                    noCase.setVisibility(View.GONE);
+                    caseList.setAdapter(new Adapter(caselistItems, Dashboard.this));
+                } else {
+                    caseList.setVisibility(View.GONE);
+                    noCase.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
-}catch (Exception ex)
-{
-    ex.fillInStackTrace();
-}
-        totalCasesCount.setText(Integer.toString(caselistItems.size()));
-        if(caselistItems.size()>0)
-        {   caseList.setVisibility(View.VISIBLE);
-           noCase.setVisibility(View.GONE);
-            caseList.setAdapter(new Adapter(caselistItems,Dashboard.this));
-        }else{
-            caseList.setVisibility(View.GONE);
-            noCase.setVisibility(View.VISIBLE);
-        }
-    }
-});
-}
     @Override
     public void onSucess(String value) {
         if (Utils.getStatus(value) == true) {
