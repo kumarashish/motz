@@ -41,6 +41,8 @@ public class CreateCase  extends Activity implements View.OnClickListener, WebAp
 Button send;
 @BindView(R.id.category)
     Spinner category;
+    @BindView(R.id.drop_down)
+    ImageView dropDown;
     Dialog dialog;
     AppController controller;
     ProgressDialog progressDialog;
@@ -59,6 +61,7 @@ Button send;
         controller=(AppController)getApplicationContext();
         ButterKnife.bind(this);
         back.setOnClickListener(this);
+        dropDown.setOnClickListener(this);
         send.setOnClickListener(this);
         progressDialog=new ProgressDialog(this);
         progressDialog.setIndeterminate(false);
@@ -76,6 +79,9 @@ Button send;
         {
             case R.id.back:
                 finish();
+                break;
+            case R.id.drop_down:
+                category.performClick();
                 break;
             case R.id.send:
               if((title.getText().length()>0)&&(description.getText().length()>0))

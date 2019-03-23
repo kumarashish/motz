@@ -294,7 +294,7 @@ public class WebApiCall {
             }
         });
     }
-    public void login(String url, String email, String password, final WebApiResponseCallback callback) {
+    public void login(String url, String email, String password,String deviceId, final WebApiResponseCallback callback) {
 
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
@@ -304,7 +304,7 @@ public class WebApiCall {
         formBody = new FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
-                .add("device_id","androidTest")
+                .add("device_id",deviceId)
                 .build();
         Request request = new Request.Builder().url(url).post(formBody).build();
         client.newCall(request).enqueue(new Callback() {

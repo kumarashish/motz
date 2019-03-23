@@ -11,13 +11,14 @@ public class Common {
     public static String forgetPasswordUrl=baseUrl+"/motzusers/forgot_password";
     public static String totalCaseUrl=baseUrl+"/cases";
     public static String fbLoginUrl=baseUrl+"/motzusers/login_with_facebook";
+    public static String googleLoginUrl=baseUrl+"/motzusers/login_with_facebook";
     public static String updateProfileUrl=baseUrl+"/motzusers/update_my_details";
     public static String updatePasswordUrl=baseUrl+"/motzusers/update_my_password";
     public static String isUserExistUrl=baseUrl+"/motzusers/check_username_exists";
 
 
     public static String updatePasswordKeys[]={"old_password","new_password"};
-
+ public static String emaiId[]={"email"};
 
 
 

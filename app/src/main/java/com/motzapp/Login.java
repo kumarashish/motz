@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +24,16 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import org.json.JSONObject;
 
@@ -36,7 +48,7 @@ import model.RegisterModel;
 import utils.Utils;
 import utils.Validation;
 
-public class Login  extends Activity implements View.OnClickListener, WebApiResponseCallback {
+public class Login  extends FragmentActivity implements View.OnClickListener, WebApiResponseCallback, GoogleApiClient.OnConnectionFailedListener  {
     @BindView(R.id.submit)
     Button submit;
     @BindView(R.id.signUp)
@@ -60,17 +72,22 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
     CallbackManager  callbackManager;
     int apiCall;
     int login=1,fb_Login=2;
+    int  RC_SIGN_IN=222;
+    @BindView(R.id.btn_sign_in)
+    SignInButton btnSignIn;
+    private GoogleApiClient mGoogleApiClient;
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && (Build.VERSION.SDK_INT < 26)) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        } else if (Build.VERSION.SDK_INT >= 26) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+//        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && (Build.VERSION.SDK_INT < 26)) {
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        } else if (Build.VERSION.SDK_INT >= 26) {
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        }
         controller=(AppController) getApplicationContext();
         progressDialog=new ProgressDialog(this);
         progressDialog.setIndeterminate(false);
@@ -86,6 +103,20 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
         btn_fblogin.setReadPermissions("email", "public_profile");
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logOut();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this, this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
+
+
+        // Customizing G+ button
+        btnSignIn.setSize(SignInButton.SIZE_STANDARD);
+        btnSignIn.setScopes(gso.getScopeArray());
 
         btn_fblogin.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -139,6 +170,7 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
                 });
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -147,19 +179,19 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
               btn_fblogin.performClick();
                 break;
             case R.id.google:
-                Toast.makeText(Login.this, "Logged in Sucessfully", Toast.LENGTH_SHORT).show();
+                signIn();
                 break;
             case R.id.submit:
                 if( ( validation.isEmailIdValid(emailId))&&(validation.isNotNull(password))) {
                     if (Utils.isNetworkAvailable(Login.this)) {
                         apiCall=login;
                         progressDialog.show();
-                        controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),Login.this);
+                        controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),Utils.getDeviceID(Login.this),Login.this);
                     }} else {
 
                         if (emailId.getText().length() == 0) {
                             Toast.makeText(Login.this, "Please enter valid username", Toast.LENGTH_SHORT).show();
-                        } else {
+                        } else if(password.getText().length()==0){
                             Toast.makeText(Login.this, "Please enter password", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -203,7 +235,63 @@ public class Login  extends Activity implements View.OnClickListener, WebApiResp
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        // An unresolvable error has occurred and Google APIs (including Sign-In) will not
+        // be available.
+        Log.d("TAG", "onConnectionFailed:" + connectionResult);
+    }
+
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                       // updateUI(false);
+                    }
+                });
+    }
+
+
+
+    private void handleSignInResult(GoogleSignInResult result) {
+
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            String id=acct.getId();
+            String name = acct.getDisplayName();
+            //String personPhotoUrl = acct.getPhotoUrl().toString();
+            String email = acct.getEmail();
+            apiCall = fb_Login;
+            progressDialog.show();
+            controller.getWebApiCall().loginWithFb(Common.googleLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), id, Login.this);
+
+            signOut();
+
+
+
+
+        } else {
+            // Signed out, show unauthenticated UI.
+
+        }
     }
 }

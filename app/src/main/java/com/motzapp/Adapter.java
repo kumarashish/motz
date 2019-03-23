@@ -58,15 +58,12 @@ public class Adapter extends BaseAdapter {
         if(model.getStatus().equalsIgnoreCase("New"))
         {
             holder.view.setBackgroundColor(act.getResources().getColor(R.color.colorPrimary));
+            holder.initials.setText("New");
         }else{
             holder.view.setBackgroundColor(act.getResources().getColor(R.color.dark));
+            holder.initials.setText("Old");
         }
-        if(model.getCategory_name().length()>1) {
-            holder.initials.setText(model.getCategory_name().substring(0,4));
-        }else{
-            holder.initials.setText("N/A"+position);
 
-        }
         holder.heading.setText(model.getTitle());
         holder.details.setText(model.getDescription());
         convertView.setTag(holder);

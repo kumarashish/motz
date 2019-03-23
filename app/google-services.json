@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "669236246190",
+    "firebase_url": "https://motzapp-54312.firebaseio.com",
+    "project_id": "motzapp-54312",
+    "storage_bucket": "motzapp-54312.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669236246190:android:ce82e4e8047157db",
+        "android_client_info": {
+          "package_name": "com.motzapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669236246190-h6r3b571v3ivnoimbjre4t2aq05va3l4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI3SlpXnmxydA-O8M9gX9WQywQcS6SboU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

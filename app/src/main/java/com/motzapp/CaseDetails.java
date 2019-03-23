@@ -44,6 +44,7 @@ public class CaseDetails  extends Activity implements View.OnClickListener, WebA
     TextView description;
     @BindView(R.id.last_mordified_on)
     TextView lastMordification;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

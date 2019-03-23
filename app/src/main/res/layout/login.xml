@@ -170,6 +170,19 @@
 
                          />
                 </RelativeLayout>
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+
+                <com.google.android.gms.common.SignInButton
+
+                    android:id="@+id/btn_sign_in"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"/>
 
                 <Button
                     android:fontFamily="@font/light"
@@ -181,6 +194,7 @@
                     android:background="@drawable/login_g"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -215,7 +229,7 @@
             <View
 
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="100dp"/>
         </LinearLayout>
     </ScrollView>
 

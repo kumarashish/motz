@@ -51,14 +51,14 @@ int checkUserExistence=1,register=2;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        if( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)&&(Build.VERSION.SDK_INT <26) ){
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }else if(Build.VERSION.SDK_INT >=26){
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        }
+//        if( (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)&&(Build.VERSION.SDK_INT <26) ){
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        }else if(Build.VERSION.SDK_INT >=26){
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//
+//        }
         ButterKnife.bind(this);
         signIn.setOnClickListener(this);
         signup.setOnClickListener(this);
@@ -108,10 +108,25 @@ int checkUserExistence=1,register=2;
      }
      return false;
  }
+
+    public void isUserAlreadyExists()
+    {   progressDialog.show();
+    apiCall=checkUserExistence;
+        controller.getWebApiCall().postData(Common.isUserExistUrl,"",Common.emaiId,new String[]{email.getText().toString()},Register.this);
+
+    }
  public void register()
- {
-     RegisterModel model=new RegisterModel(fname.getText().toString(),lName.getText().toString(),email.getText().toString(),mobile.getText().toString(),password.getText().toString());
-     controller.getWebApiCall().register(Common.registerUser,model,Register.this);
+ { runOnUiThread(new Runnable() {
+     @Override
+     public void run() {
+         progressDialog.show();
+         apiCall=register;
+         RegisterModel model=new RegisterModel(fname.getText().toString(),lName.getText().toString(),email.getText().toString(),mobile.getText().toString(),password.getText().toString());
+         controller.getWebApiCall().register(Common.registerUser,model,Register.this);
+
+     }
+ });
+
 
  }
     @Override
@@ -127,6 +142,7 @@ int checkUserExistence=1,register=2;
             case R.id.signUp:
                 if(isFieldsValidated())
                 {
+                    isUserAlreadyExists();
 
                   progressDialog.show();
 
@@ -135,12 +151,36 @@ int checkUserExistence=1,register=2;
                 break;
         }
     }
+
     @Override
     public void onSucess(String value) {
-        if(Utils.getStatus(value)==true)
-        { Utils.showToast(Register.this,Utils.getMessage(value));
-            Utils.cancelProgressDialog(Register.this,progressDialog);
-            finish();
+
+
+        {
+            switch (apiCall) {
+                case 1:
+                    if (Utils.getStatus(value) == true) {
+                        Utils.showToast(Register.this, Utils.getMessage(value));
+                        Utils.cancelProgressDialog(Register.this, progressDialog);
+                    } else {
+                        Utils.cancelProgressDialog(Register.this, progressDialog);
+                        register();
+                    }
+
+                    break;
+                case 2:
+                    if (Utils.getStatus(value) == true) {
+                        Utils.showToast(Register.this, Utils.getMessage(value));
+                        Utils.cancelProgressDialog(Register.this, progressDialog);
+                        finish();
+                    } else {
+                        Utils.cancelProgressDialog(Register.this, progressDialog);
+                        Utils.showToast(Register.this, Utils.getMessage(value));
+                    }
+                    break;
+            }
+
+
         }
 
 
