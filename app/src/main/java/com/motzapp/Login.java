@@ -34,6 +34,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import org.json.JSONObject;
 
@@ -43,6 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import common.AppController;
 import common.Common;
+import common.FirebaseInstanceIDService;
 import interfaces.WebApiResponseCallback;
 import model.RegisterModel;
 import utils.Utils;
@@ -81,13 +88,6 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-//        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) && (Build.VERSION.SDK_INT < 26)) {
-//            Window w = getWindow(); // in Activity's onCreate() for instance
-//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        } else if (Build.VERSION.SDK_INT >= 26) {
-//            Window w = getWindow(); // in Activity's onCreate() for instance
-//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-//        }
         controller=(AppController) getApplicationContext();
         progressDialog=new ProgressDialog(this);
         progressDialog.setIndeterminate(false);
@@ -103,17 +103,14 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
         btn_fblogin.setReadPermissions("email", "public_profile");
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().logOut();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-
-
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .enableAutoManage(this, this)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build();
-
-
         // Customizing G+ button
         btnSignIn.setSize(SignInButton.SIZE_STANDARD);
         btnSignIn.setScopes(gso.getScopeArray());
@@ -141,11 +138,10 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
 
                                             apiCall = fb_Login;
                                             progressDialog.show();
-                                            controller.getWebApiCall().loginWithFb(Common.fbLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), loginResult.getAccessToken().getToken(), Login.this);
+                                            controller.getWebApiCall().loginWithSocialNetwork(Common.fbLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), loginResult.getAccessToken().getToken(), Login.this);
                                             LoginManager.getInstance().logOut();
                                         } catch (Exception e) {
                                             e.printStackTrace();
-                                            ;
                                         }
                                     }
                                 });
@@ -186,7 +182,7 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
                     if (Utils.isNetworkAvailable(Login.this)) {
                         apiCall=login;
                         progressDialog.show();
-                        controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),Utils.getDeviceID(Login.this),Login.this);
+                        controller.getWebApiCall().login(Common.login,emailId.getText().toString(),password.getText().toString(),utils.Utils.getDeviceID(Login.this),Login.this);
                     }} else {
 
                         if (emailId.getText().length() == 0) {
@@ -230,8 +226,6 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
     public void onError(String value) {
         Utils.showToast(Login.this,value);
         Utils.cancelProgressDialog(Login.this,progressDialog);
-
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -282,7 +276,7 @@ public class Login  extends FragmentActivity implements View.OnClickListener, We
             String email = acct.getEmail();
             apiCall = fb_Login;
             progressDialog.show();
-            controller.getWebApiCall().loginWithFb(Common.googleLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), id, Login.this);
+            controller.getWebApiCall().loginWithSocialNetwork(Common.googleLoginUrl, id, email, name, utils.Utils.getDeviceID(Login.this), id, Login.this);
 
             signOut();
 

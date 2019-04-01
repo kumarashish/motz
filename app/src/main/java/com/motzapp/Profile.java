@@ -68,7 +68,7 @@ public void setData()
 
                     if (Utils.isNetworkAvailable(Profile.this)) {
                         progressDialog.show();
-                        controller.getWebApiCall().updateProfile(Common.updateProfileUrl,fname.getText().toString(),lname .getText().toString(),mobile.getText().toString() ,controller.getManager().getUserToken(),Profile.this);
+                        controller.getWebApiCall().postData(Common.updateProfileUrl,controller.getManager().getUserToken(),Common.updateProfileKeys,new String[]{fname.getText().toString(),lname .getText().toString(),mobile.getText().toString()} ,Profile.this);
                     }
                 } else {
 
@@ -92,7 +92,7 @@ public void setData()
            RegisterModel model=new RegisterModel(value);
            model.setEmailId(emailId);
             controller.setProfile(model);
-            Utils.showToast(Profile.this, Utils.getMessage(value));
+            Utils.showToast(Profile.this, "Profile Updated Sucessfully.");
             finish();
 
         } else {

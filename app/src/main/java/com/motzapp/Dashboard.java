@@ -31,6 +31,7 @@ import common.AppController;
 import common.Common;
 import interfaces.WebApiResponseCallback;
 import model.CasesModel;
+import model.RegisterModel;
 import utils.Utils;
 
 public class Dashboard extends Activity implements View.OnClickListener, WebApiResponseCallback {
@@ -41,7 +42,7 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
     @BindView(R.id.notification)
     View notification;
     @BindView(R.id.create_case)
-    FloatingActionButton fab;
+    Button fab;
     @BindView(R.id.notification_count)
     TextView notificationCount;
     @BindView(R.id.email_count)
@@ -81,6 +82,7 @@ public class Dashboard extends Activity implements View.OnClickListener, WebApiR
 public void getData(){
     if (Utils.isNetworkAvailable(Dashboard.this)) {
         progressDialog.show();
+        caselistItems.clear();
         controller.getWebApiCall().getDataCommonMethod(Common.totalCaseUrl,controller.getManager().getUserToken(),Dashboard.this);
     }
 }
@@ -117,6 +119,7 @@ public void getData(){
                 {
                     case R.id.logout:
                         startActivity(new Intent(Dashboard.this,Login.class));
+                        controller.logout();
                         Toast.makeText(Dashboard.this, "Logged out Sucessfully", Toast.LENGTH_SHORT).show();
                         finish();
                         break;

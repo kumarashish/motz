@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "669236246190-0df4qpnmvciphe33fs96pd5bcftmf6ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.motzapp",
+            "certificate_hash": "2e14be01a24ddec1b88c60b3f7f3337d4b1d45fc"
+          }
+        },
+        {
+          "client_id": "669236246190-0p8tb8bo2vjpchjji2uhl1og72mhq0kq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.motzapp",
+            "certificate_hash": "645a241ad43449ccdf1fcc0d6cf8e2dbe19e8210"
+          }
+        },
+        {
           "client_id": "669236246190-h6r3b571v3ivnoimbjre4t2aq05va3l4.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +45,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669236246190-h6r3b571v3ivnoimbjre4t2aq05va3l4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

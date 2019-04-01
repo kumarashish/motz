@@ -181,13 +181,17 @@ public class WebApiCall {
         });
     }
 
-    public void loginWithFb(String url, String fb_Id, String email, String userName, String deviceId, String accessToken, final WebApiResponseCallback callback) {
+
+
+
+
+    public void loginWithSocialNetwork(String url, String fb_Id, String email, String userName, String deviceId, String accessToken, final WebApiResponseCallback callback) {
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS).build();
         RequestBody formBody = null;
         formBody = new FormBody.Builder()
-                .add("fb_id", fb_Id)
+                .add("social_account_key", fb_Id)
                 .add("email", email)
                 .add("username", userName)
                 .add("device_id", deviceId)
@@ -215,6 +219,8 @@ public class WebApiCall {
             }
         });
     }
+
+
 
     public void register(String url, RegisterModel model, final WebApiResponseCallback callback) {
 
@@ -256,44 +262,44 @@ public class WebApiCall {
         });
     }
 
-    public void updateProfile(String url, String fname,String lname,String mobile,String token, final WebApiResponseCallback callback) {
-
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS).build();
-        RequestBody formBody = null;
-
-
-
-        formBody = new FormBody.Builder()
-
-                .add("first_name", fname)
-                .add("last_name", lname)
-                .add("phone", mobile)
-
-                .build();
-        Request request = new Request.Builder().header("auth_token",token).url(url).post(formBody).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-                callback.onError(e.fillInStackTrace().toString());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.code() == 200 || response.code() == 201) {
-                    if (response != null) {
-                        callback.onSucess(response.body().string());
-                    } else {
-                        callback.onError(response.message());
-                    }
-                } else {
-                    callback.onError(response.message());
-                }
-            }
-        });
-    }
+//    public void updateProfile(String url, String fname,String lname,String mobile,String token, final WebApiResponseCallback callback) {
+//
+//        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+//                .writeTimeout(60, TimeUnit.SECONDS)
+//                .readTimeout(60, TimeUnit.SECONDS).build();
+//        RequestBody formBody = null;
+//
+//
+//
+//        formBody = new FormBody.Builder()
+//
+//                .add("first_name", fname)
+//                .add("last_name", lname)
+//                .add("phone", mobile)
+//
+//                .build();
+//        Request request = new Request.Builder().header("auth_token",token).url(url).post(formBody).build();
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//                callback.onError(e.fillInStackTrace().toString());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                if (response.code() == 200 || response.code() == 201) {
+//                    if (response != null) {
+//                        callback.onSucess(response.body().string());
+//                    } else {
+//                        callback.onError(response.message());
+//                    }
+//                } else {
+//                    callback.onError(response.message());
+//                }
+//            }
+//        });
+//    }
     public void login(String url, String email, String password,String deviceId, final WebApiResponseCallback callback) {
 
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)

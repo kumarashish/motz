@@ -59,16 +59,16 @@ public class CaseDetails  extends Activity implements View.OnClickListener, WebA
         setValue();
     }
 public void setValue()
-{category.setText(model.getCategory_name());
-title.setText(model.getTitle());
-description.setText(model.getDescription());
-    lastMordification.setText("Last mordification : "+model.getLast_modified_on());
+{   category.setText(model.getCategory_name());
+    title.setText(model.getTitle());
+    description.setText(model.getDescription());
+    lastMordification.setText("Last modification : "+model.getLast_modified_on());
 }
     @Override
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.back:
+               case R.id.back:
                 finish();
                 break;
 
